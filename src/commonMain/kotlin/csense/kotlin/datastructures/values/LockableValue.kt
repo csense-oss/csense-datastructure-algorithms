@@ -12,21 +12,24 @@ import kotlin.reflect.*
  * @property value T the starting value that "may" be updated up to the provided update count
  */
 public open class LockableValue<T>(
-        @IntLimit(from = 0) private var maxUpdateCount: Int,
+        @IntLimit(from = 1) maxUpdateCount: Int,
         initialValue: T,
         private val onUpdateRejected: EmptyFunction? = null
 ) {
+    @IntLimit(from = 0)
+    private var remainingUpdateCount = maxUpdateCount
+    
     /**
      * The current value (getter)
      * setting the value might not update it if the maxUpdateCount reaches zero or negative
      */
     public var value: T = initialValue
         set(newValue) {
-            if (maxUpdateCount.isNegativeOrZero) {
+            if (remainingUpdateCount.isNegativeOrZero) {
                 onUpdateRejected?.invoke()
                 return
             }
-            maxUpdateCount -= 1
+            remainingUpdateCount -= 1
             field = newValue
         }
 }

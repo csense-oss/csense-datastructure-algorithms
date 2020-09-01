@@ -65,7 +65,10 @@ public inline fun IntItemComparison.toComparing(): ItemComparison {
  * @param toInclusive [Int]
  * @return [ItemComparison]
  */
-public inline fun IntItemComparison.compareToRange(fromInclusive: Int, toInclusive: Int): ItemComparison {
+public inline fun IntItemComparison.compareToRange(
+        fromInclusive: Int,
+        toInclusive: Int
+): ItemComparison {
     //make it a bit more "defined" behavior.
     return compareToRange(fromInclusive until toInclusive)
 }
@@ -78,7 +81,9 @@ public inline fun IntItemComparison.compareToRange(fromInclusive: Int, toInclusi
  * @param intRange [IntRange]
  * @return [ItemComparison]
  */
-public inline fun IntItemComparison.compareToRange(intRange: IntRange): ItemComparison {
+public inline fun IntItemComparison.compareToRange(
+        intRange: IntRange
+): ItemComparison {
     return when {
         int in intRange -> ItemComparison.Equal
         int > intRange.largest -> ItemComparison.LargerThan

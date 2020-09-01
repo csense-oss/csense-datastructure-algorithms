@@ -72,8 +72,7 @@ public abstract class RunningAverageAbstract<T : Number> {
  */
 public open class RunningAverageInt : RunningAverageAbstract<Int>() {
     override fun addValues(first: Int, second: Int): Int = first + second
-    override val zero: Int
-        get() = 0
+    override val zero: Int = 0
 }
 
 /**
@@ -81,8 +80,7 @@ public open class RunningAverageInt : RunningAverageAbstract<Int>() {
  */
 public open class RunningAverageDouble : RunningAverageAbstract<Double>() {
     override fun addValues(first: Double, second: Double): Double = first + second
-    override val zero: Double
-        get() = 0.0
+    override val zero: Double = 0.0
 }
 
 /**
@@ -90,8 +88,7 @@ public open class RunningAverageDouble : RunningAverageAbstract<Double>() {
  */
 public open class RunningAverageFloat : RunningAverageAbstract<Float>() {
     override fun addValues(first: Float, second: Float): Float = first + second
-    override val zero: Float
-        get() = 0f
+    override val zero: Float = 0f
 }
 
 /**
@@ -117,14 +114,14 @@ public abstract class RunningAverageCappedAbstract<T : Number>(
      * @param item T
      * @param index [Int]
      */
-    public abstract fun setValue(item: T, index: Int)
+    public abstract fun setValue(item: T, @IntLimit(from = 0) index: Int)
     
     /**
      *
      * @param toTakeCount [Int]
      * @return Iterable<T>
      */
-    public abstract fun takeValues(toTakeCount: Int): Iterable<T>
+    public abstract fun takeValues(@IntLimit(from = 0) toTakeCount: Int): Iterable<T>
     
     
     /**
@@ -149,6 +146,7 @@ public abstract class RunningAverageCappedAbstract<T : Number>(
         currentIndex = (currentIndex + 1).rem(cappedNumberOfValues)
     }
     
+    //TODO only recompute when needed and store that.
     /**
      *
      */
@@ -171,13 +169,17 @@ public abstract class RunningAverageCappedAbstract<T : Number>(
  * @property values [FloatArray]
  * @constructor
  */
-public open class RunningAverageFloatCapped(cappedValuesToAverage: Int) : RunningAverageCappedAbstract<Float>(cappedValuesToAverage) {
+public open class RunningAverageFloatCapped(
+        cappedValuesToAverage: Int
+) : RunningAverageCappedAbstract<Float>(cappedValuesToAverage) {
     
     private val values = FloatArray(cappedValuesToAverage)
     
-    override fun takeValues(toTakeCount: Int): List<Float> = values.take(toTakeCount)
+    override fun takeValues(
+            @IntLimit(from = 0) toTakeCount: Int
+    ): List<Float> = values.take(toTakeCount)
     
-    override fun setValue(item: Float, index: Int) {
+    override fun setValue(item: Float, @IntLimit(from = 0) index: Int) {
         values[index] = item
     }
     
@@ -195,11 +197,13 @@ public open class RunningAverageIntCapped(cappedValuesToAverage: Int) : RunningA
     
     override fun clearValues(): Unit = values.fill(0)
     
-    override fun setValue(item: Int, index: Int) {
+    override fun setValue(item: Int, @IntLimit(from = 0) index: Int) {
         values[index] = item
     }
     
-    override fun takeValues(toTakeCount: Int): Iterable<Int> = values.take(toTakeCount)
+    override fun takeValues(
+            @IntLimit(from = 0) toTakeCount: Int
+    ): Iterable<Int> = values.take(toTakeCount)
 }
 
 /**
@@ -207,19 +211,21 @@ public open class RunningAverageIntCapped(cappedValuesToAverage: Int) : RunningA
  * @property values [DoubleArray]
  * @constructor
  */
-public open class RunningAverageDoubleCapped(cappedValuesToAverage: Int) : RunningAverageCappedAbstract<Double>(cappedValuesToAverage) {
+public open class RunningAverageDoubleCapped(
+        cappedValuesToAverage: Int
+) : RunningAverageCappedAbstract<Double>(cappedValuesToAverage) {
     
     private val values = DoubleArray(cappedValuesToAverage)
     
     override fun clearValues(): Unit = values.fill(0.0)
     
     
-    override fun setValue(item: Double, index: Int) {
+    override fun setValue(item: Double, @IntLimit(from = 0) index: Int) {
         values[index] = item
     }
     
     
-    override fun takeValues(toTakeCount: Int): Iterable<Double> =
+    override fun takeValues(@IntLimit(from = 0) toTakeCount: Int): Iterable<Double> =
             values.take(toTakeCount)
     
 }

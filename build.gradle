@@ -12,7 +12,7 @@ buildscript {
     ext.csenseRepoName = "maven"
     ext.csenseVersionName = "0.0.40"
     ext.csenseGroupId = "csense.kotlin"
-    ext.csenseArtifactId = "csense-kotlin-datastructure-algorithms"
+    ext.csenseArtifactId = "csense-kotlin-datastructures-algorithms"
     ext.csenseGithub = "csense-oss/csense-kotlin"
     ext.csenseLicense = "MIT"
     ext.csenseLicenseUrl = "https://mit-license.org/"
@@ -22,8 +22,8 @@ buildscript {
     ext.csenseDeveloperEmail = "csenseoss@tvedesys.dk"
 
     ext.readme = "readme.md"
-    ext.csenseWebsite = "https://github.com/csense-oss/csense-kotlin-datastructure-algorithms"
-    ext.csenseGit = "https://github.com/csense-oss/csense-kotlin-datastructure-algorithms.git"
+    ext.csenseWebsite = "https://github.com/csense-oss/csense-kotlin-datastructures-algorithms"
+    ext.csenseGit = "https://github.com/csense-oss/csense-kotlin-datastructures-algorithms.git"
     ext.csenseArtifactDescription = ""
     //end library settings
 }

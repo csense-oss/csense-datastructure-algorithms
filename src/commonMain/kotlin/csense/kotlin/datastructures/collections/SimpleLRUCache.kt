@@ -17,7 +17,10 @@ import kotlin.also
  * @property order [ArrayList]<Key>
  * @constructor
  */
-public class SimpleLRUCache<Key, Value>(private var cacheSize: Int) {
+public class SimpleLRUCache<Key, Value>(
+        @IntLimit(from = 1)
+        private var cacheSize: Int
+) {
     
     init {
         //make sure no one is evil enough to try and set an invalid cache size.
@@ -199,7 +202,7 @@ public class SimpleLRUCache<Key, Value>(private var cacheSize: Int) {
      * @return [Int] a safe value for this cache size least valued.
      * @TimeComplexity O(1)
      */
-    private fun getLeastValidCacheSize(@IntLimit(from = 0) size: Int): Int {
-        return maxOf(size, 1)
+    private fun getLeastValidCacheSize(@IntLimit(from = 1) size: Int): Int {
+        return size.coerceAtLeast(1)
     }
 }
