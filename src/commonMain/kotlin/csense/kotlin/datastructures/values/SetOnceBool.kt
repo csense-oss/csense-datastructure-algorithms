@@ -15,3 +15,4 @@ public class SetOnceBool(
         initialValue: Boolean,
         onUpdateRejected: EmptyFunction? = null
 ) : SetOnce<Boolean>(initialValue, onUpdateRejected)
+

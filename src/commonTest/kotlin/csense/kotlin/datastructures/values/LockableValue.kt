@@ -24,4 +24,28 @@ class LockableValueTest {
             lockableValue.value.assert("")
         }
     }
+
+    @Test
+    fun lockableValueTIsLocked() {
+        //TODO make me.
+
+    }
+
+    @Test
+    fun lockableValueTIsUnlocked() {
+        //TODO make me.
+
+    }
+
+    @Test
+    fun lock() {
+        //TODO make me.
+
+    }
+
+    @Test
+    fun lockWith() {
+        //TODO make me.
+
+    }
 }
