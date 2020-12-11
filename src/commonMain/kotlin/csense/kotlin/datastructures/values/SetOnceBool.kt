@@ -2,6 +2,11 @@ package csense.kotlin.datastructures.values
 
 import csense.kotlin.*
 
+/**
+ *
+ * @param T
+ * @constructor
+ */
 public open class SetOnce<T>(
         initialValue: T,
         onUpdateRejected: EmptyFunction? = null

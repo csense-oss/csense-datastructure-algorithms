@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.0.42
+- more extensions and more tests for LockableValue
+
 ## 0.0.41
 - removed JMH from jvm target
 

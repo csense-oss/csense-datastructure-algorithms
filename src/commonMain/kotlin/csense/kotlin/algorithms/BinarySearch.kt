@@ -108,9 +108,9 @@ public inline fun <T> GenericAlgorithms.binarySearch(
         val mid = start + (end - start) / 2
         val item = constantGetter(mid)
         when (compareFnc(item, mid)) {
-            ItemComparison.LessThan -> start = mid + 1 // the item is less than what we are looking for
-            ItemComparison.LargerThan -> end = mid //the item is larger than what we are looking for
-            ItemComparison.Equal -> return mid // this is what we are searching for.
+            ItemComparison.LessThan -> start = mid + 1
+            ItemComparison.LargerThan -> end = mid
+            ItemComparison.Equal -> return mid
         }
     }
     return null

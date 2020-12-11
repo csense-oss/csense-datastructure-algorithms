@@ -16,12 +16,12 @@ public enum class ItemComparison {
      * x > y then Larger than
      */
     LargerThan,
-    
+
     /**
      * x < y then less than.
      */
     LessThan,
-    
+
     /**
      * (x == y) then "Equal"
      */
@@ -66,12 +66,10 @@ public inline fun IntItemComparison.toComparing(): ItemComparison {
  * @return [ItemComparison]
  */
 public inline fun IntItemComparison.compareToRange(
-        fromInclusive: Int,
-        toInclusive: Int
-): ItemComparison {
-    //make it a bit more "defined" behavior.
-    return compareToRange(fromInclusive until toInclusive)
-}
+    fromInclusive: Int,
+    toInclusive: Int
+): ItemComparison =
+    compareToRange(fromInclusive until toInclusive)
 
 
 /**
@@ -82,7 +80,7 @@ public inline fun IntItemComparison.compareToRange(
  * @return [ItemComparison]
  */
 public inline fun IntItemComparison.compareToRange(
-        intRange: IntRange
+    intRange: IntRange
 ): ItemComparison {
     return when {
         int in intRange -> ItemComparison.Equal

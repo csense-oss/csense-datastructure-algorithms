@@ -36,11 +36,11 @@ public open class LockableValue<T>(
             field = newValue
         }
 
-    public fun <T> LockableValue<T>.isLocked(): Boolean {
+    public fun isLocked(): Boolean {
         return remainingUpdateCount <= 0
     }
 
-    public fun <T> LockableValue<T>.isUnlocked(): Boolean {
+    public fun isUnlocked(): Boolean {
         return !isLocked()
     }
 

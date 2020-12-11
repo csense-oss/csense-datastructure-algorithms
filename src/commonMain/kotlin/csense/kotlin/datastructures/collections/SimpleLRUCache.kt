@@ -145,7 +145,6 @@ public class SimpleLRUCache<Key, Value>(
      */
     public fun setCacheSize(@IntLimit(from = 1) newSize: Int) {
         if (newSize < cacheSize) {
-            //reduce size => remove oldest
             removeOldest(cacheSize - newSize)
         }
         cacheSize = getLeastValidCacheSize(newSize)
