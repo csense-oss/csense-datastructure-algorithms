@@ -49,7 +49,7 @@ class RunningAverageFloatCappedTest {
 
 class RunningAverageIntCappedTest {
 
-      @Test
+    @Test
     fun setValue() {
         //TODO make me.
 

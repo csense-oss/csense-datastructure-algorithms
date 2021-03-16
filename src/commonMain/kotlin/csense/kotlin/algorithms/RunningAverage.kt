@@ -4,6 +4,7 @@ package csense.kotlin.algorithms
 
 import csense.kotlin.annotations.numbers.IntLimit
 import csense.kotlin.annotations.numbers.LongLimit
+import csense.kotlin.datastructures.caching.CacheAble
 
 /**
  *
@@ -12,23 +13,27 @@ import csense.kotlin.annotations.numbers.LongLimit
  *
  */
 public abstract class RunningAverageAbstract<T : Number> {
-    
+
     /**
      *
      */
     @LongLimit(from = 0)
     private var numberCount: Long = 0
-    
+
     /**
      *
      */
-    private var aggregatedValue: T
-    
+    private val aggregatedValue: CacheAble<T, Double> by lazy {
+        CacheAble(zero) {
+            it.toDouble() / numberCount
+        }
+    }
+
     /**
      * The neutral element
      */
     protected abstract val zero: T
-    
+
     /**
      *
      * @param first T
@@ -36,32 +41,27 @@ public abstract class RunningAverageAbstract<T : Number> {
      * @return T
      */
     protected abstract fun addValues(first: T, second: T): T
-    
-    init {
-        @Suppress("LeakingThis")
-        aggregatedValue = zero
-    }
-    
+
     /**
      *
      * @param newValue T
      */
     public fun addValue(newValue: T) {
-        aggregatedValue = addValues(aggregatedValue, newValue)
+        aggregatedValue.update(addValues(aggregatedValue.getValue(), newValue))
         numberCount += 1
     }
-    
+
     /**
      *
      */
     public val average: Double
-        get() = aggregatedValue.toDouble() / numberCount
-    
+        get() = aggregatedValue.getCachedValue()
+
     /**
      *
      */
     public fun reset() {
-        aggregatedValue = zero
+        aggregatedValue.reset()
         numberCount = 0
     }
 }
@@ -101,67 +101,69 @@ public open class RunningAverageFloat : RunningAverageAbstract<Float>() {
  * @constructor
  */
 public abstract class RunningAverageCappedAbstract<T : Number>(
-        @IntLimit(from = 0) private val cappedNumberOfValues: Int
+    @IntLimit(from = 0) private val cappedNumberOfValues: Int
 ) {
-    
+
     /**
      *
      */
     public abstract fun clearValues()
-    
+
     /**
      *
      * @param item T
      * @param index [Int]
      */
     public abstract fun setValue(item: T, @IntLimit(from = 0) index: Int)
-    
+
     /**
      *
      * @param toTakeCount [Int]
      * @return Iterable<T>
      */
     public abstract fun takeValues(@IntLimit(from = 0) toTakeCount: Int): Iterable<T>
-    
-    
+
     /**
      * How many values we have set of the available elements in the array
      */
-    @IntLimit(from = 0)
-    private var valuesSet = 0
-    
+    @Suppress("InheritanceInitializationOrder")
+    private val valuesSet: CacheAble<Int, Double> = CacheAble(
+        initialValue = 0
+    ) { valuesSet: Int ->
+        takeValues(valuesSet).sumByDouble(Number::toDouble) / valuesSet
+    }
+
     /**
      * Since the array acts as a ring buffer.
      */
     @IntLimit(from = 0)
     private var currentIndex = 0
-    
+
     /**
      *
      * @param newValue T
      */
     public fun addValue(newValue: T) {
-        valuesSet = minOf(valuesSet + 1, cappedNumberOfValues)
+        valuesSet.update(minOf(valuesSet.getValue() + 1, cappedNumberOfValues))
         setValue(newValue, currentIndex)
         currentIndex = (currentIndex + 1).rem(cappedNumberOfValues)
     }
-    
-    //TODO only recompute when needed and store that.
+
     /**
      *
      */
     public val average: Double
-        get() = takeValues(valuesSet).sumByDouble(Number::toDouble) / valuesSet
-    
+        get() = valuesSet.getCachedValue()
+
     /**
      *
      */
     public fun reset() {
-        valuesSet = 0
+        valuesSet.reset()
         currentIndex = 0
         clearValues()
     }
-    
+
 }
 
 /**
@@ -170,19 +172,19 @@ public abstract class RunningAverageCappedAbstract<T : Number>(
  * @constructor
  */
 public open class RunningAverageFloatCapped(
-        cappedValuesToAverage: Int
+    cappedValuesToAverage: Int
 ) : RunningAverageCappedAbstract<Float>(cappedValuesToAverage) {
-    
+
     private val values = FloatArray(cappedValuesToAverage)
-    
+
     override fun takeValues(
-            @IntLimit(from = 0) toTakeCount: Int
+        @IntLimit(from = 0) toTakeCount: Int
     ): List<Float> = values.take(toTakeCount)
-    
+
     override fun setValue(item: Float, @IntLimit(from = 0) index: Int) {
         values[index] = item
     }
-    
+
     override fun clearValues(): Unit = values.fill(0f)
 }
 
@@ -191,18 +193,19 @@ public open class RunningAverageFloatCapped(
  * @property values [IntArray]
  * @constructor
  */
-public open class RunningAverageIntCapped(cappedValuesToAverage: Int) : RunningAverageCappedAbstract<Int>(cappedValuesToAverage) {
-    
+public open class RunningAverageIntCapped(cappedValuesToAverage: Int) :
+    RunningAverageCappedAbstract<Int>(cappedValuesToAverage) {
+
     private val values = IntArray(cappedValuesToAverage)
-    
+
     override fun clearValues(): Unit = values.fill(0)
-    
+
     override fun setValue(item: Int, @IntLimit(from = 0) index: Int) {
         values[index] = item
     }
-    
+
     override fun takeValues(
-            @IntLimit(from = 0) toTakeCount: Int
+        @IntLimit(from = 0) toTakeCount: Int
     ): Iterable<Int> = values.take(toTakeCount)
 }
 
@@ -212,20 +215,20 @@ public open class RunningAverageIntCapped(cappedValuesToAverage: Int) : RunningA
  * @constructor
  */
 public open class RunningAverageDoubleCapped(
-        cappedValuesToAverage: Int
+    cappedValuesToAverage: Int
 ) : RunningAverageCappedAbstract<Double>(cappedValuesToAverage) {
-    
+
     private val values = DoubleArray(cappedValuesToAverage)
-    
+
     override fun clearValues(): Unit = values.fill(0.0)
-    
-    
+
+
     override fun setValue(item: Double, @IntLimit(from = 0) index: Int) {
         values[index] = item
     }
-    
-    
+
+
     override fun takeValues(@IntLimit(from = 0) toTakeCount: Int): Iterable<Double> =
-            values.take(toTakeCount)
-    
+        values.take(toTakeCount)
+
 }

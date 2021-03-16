@@ -16,7 +16,7 @@ import csense.kotlin.annotations.numbers.*
  */
 @IntLimit(from = 0)
 public inline fun <T> List<T>.binarySearch(crossinline compareFnc: Function2<T, Int, ItemComparison>): Int? =
-        GenericAlgorithms.binarySearch(size, this::get, compareFnc)
+    GenericAlgorithms.binarySearch(size, this::get, compareFnc)
 
 /**
  * Performs the binary search algorithm , by providing a custom compare function, that given the current item and the index,
@@ -27,7 +27,7 @@ public inline fun <T> List<T>.binarySearch(crossinline compareFnc: Function2<T, 
  */
 @IntLimit(from = 0)
 public inline fun <T> Array<T>.binarySearch(crossinline compareFnc: Function2<T, Int, ItemComparison>): Int? =
-        GenericAlgorithms.binarySearch(size, this::get, compareFnc)
+    GenericAlgorithms.binarySearch(size, this::get, compareFnc)
 
 /**
  * Performs the binary search algorithm , by providing a custom compare function, that given the current item and the index,
@@ -38,7 +38,7 @@ public inline fun <T> Array<T>.binarySearch(crossinline compareFnc: Function2<T,
  */
 @IntLimit(from = 0)
 public inline fun ShortArray.binarySearch(crossinline compareFnc: Function2<Short, Int, ItemComparison>): Int? =
-        GenericAlgorithms.binarySearch(size, this::get, compareFnc)
+    GenericAlgorithms.binarySearch(size, this::get, compareFnc)
 
 /**
  * Performs the binary search algorithm , by providing a custom compare function, that given the current item and the index,
@@ -49,7 +49,7 @@ public inline fun ShortArray.binarySearch(crossinline compareFnc: Function2<Shor
  */
 @IntLimit(from = 0)
 public inline fun IntArray.binarySearch(crossinline compareFnc: Function2<Int, Int, ItemComparison>): Int? =
-        GenericAlgorithms.binarySearch(size, this::get, compareFnc)
+    GenericAlgorithms.binarySearch(size, this::get, compareFnc)
 
 /**
  * Performs the binary search algorithm , by providing a custom compare function, that given the current item and the index,
@@ -60,7 +60,7 @@ public inline fun IntArray.binarySearch(crossinline compareFnc: Function2<Int, I
  */
 @IntLimit(from = 0)
 public inline fun LongArray.binarySearch(crossinline compareFnc: Function2<Long, Int, ItemComparison>): Int? =
-        GenericAlgorithms.binarySearch(size, this::get, compareFnc)
+    GenericAlgorithms.binarySearch(size, this::get, compareFnc)
 
 /**
  * Performs the binary search algorithm , by providing a custom compare function, that given the current item and the index,
@@ -71,7 +71,7 @@ public inline fun LongArray.binarySearch(crossinline compareFnc: Function2<Long,
  */
 @IntLimit(from = 0)
 public inline fun FloatArray.binarySearch(crossinline compareFnc: Function2<Float, Int, ItemComparison>): Int? =
-        GenericAlgorithms.binarySearch(size, this::get, compareFnc)
+    GenericAlgorithms.binarySearch(size, this::get, compareFnc)
 
 /**
  * Performs the binary search algorithm , by providing a custom compare function, that given the current item and the index,
@@ -82,7 +82,7 @@ public inline fun FloatArray.binarySearch(crossinline compareFnc: Function2<Floa
  */
 @IntLimit(from = 0)
 public inline fun DoubleArray.binarySearch(crossinline compareFnc: Function2<Double, Int, ItemComparison>): Int? =
-        GenericAlgorithms.binarySearch(size, this::get, compareFnc)
+    GenericAlgorithms.binarySearch(size, this::get, compareFnc)
 
 
 /**
@@ -98,9 +98,9 @@ public inline fun DoubleArray.binarySearch(crossinline compareFnc: Function2<Dou
 
 @IntLimit(from = 0)
 public inline fun <T> GenericAlgorithms.binarySearch(
-        @IntLimit(from = 0) length: Int,
-        crossinline constantGetter: (index: @IntLimit(from = 0) Int) -> T,
-        crossinline compareFnc: Function2<T, Int, ItemComparison>
+    @IntLimit(from = 0) length: Int,
+    crossinline constantGetter: (index: @IntLimit(from = 0) Int) -> T,
+    crossinline compareFnc: Function2<T, Int, ItemComparison>
 ): Int? {
     var start = 0
     var end = length

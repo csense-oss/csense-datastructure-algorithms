@@ -2,6 +2,7 @@ package csense.kotlin.algorithms
 
 import csense.kotlin.tests.assertions.assert
 import kotlin.test.Test
+import kotlin.test.assertNotEquals
 
 class ComparisonKtTest {
 
@@ -33,5 +34,14 @@ class ComparisonKtTest {
         3.itemComparison.compareToRange(0 until 5).assert(ItemComparison.Equal)
         4.itemComparison.compareToRange(0 until 5).assert(ItemComparison.Equal)
         5.itemComparison.compareToRange(0 until 5).assert(ItemComparison.LargerThan)
+    }
+
+    @Test
+    fun intItemComparison() {
+        (-1).itemComparison.int.assert(-1)
+        0.itemComparison.int.assert(0)
+        val a = 0.itemComparison
+        val b = 1.itemComparison
+        assertNotEquals(a, b)
     }
 }
