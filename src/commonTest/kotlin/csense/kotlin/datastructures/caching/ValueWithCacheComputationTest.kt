@@ -5,11 +5,11 @@ import csense.kotlin.tests.assertions.assertCalled
 import csense.kotlin.tests.assertions.failTest
 import kotlin.test.Test
 
-class CacheAbleTest {
+class ValueWithCacheComputationTest {
 
     @Test
     fun getValue() {
-        val cache = CacheAble("value") {
+        val cache = ValueWithCacheComputation("value") {
             failTest("cached values should only be computed on retrieval")
         }
         cache.getValue().assert("value")
@@ -17,7 +17,7 @@ class CacheAbleTest {
 
     @Test
     fun getCachedValue() = assertCalled { shouldBeCalled ->
-        val cache = CacheAble("value") {
+        val cache = ValueWithCacheComputation("value") {
             shouldBeCalled()
             "cache-$it"
         }
@@ -29,7 +29,7 @@ class CacheAbleTest {
 
         @Test
         fun updateChangesBothTheValueAndCache() {
-            val cache = CacheAble("value") {
+            val cache = ValueWithCacheComputation("value") {
                 "cache-$it"
             }
             cache.getValue().assert("value")
@@ -41,7 +41,7 @@ class CacheAbleTest {
 
         @Test
         fun cacheShouldOnlyBeUpdatedOnUpdates() = assertCalled(times = 2) { shouldBeCalled ->
-            val cache = CacheAble("value") {
+            val cache = ValueWithCacheComputation("value") {
                 shouldBeCalled()
                 "cache-$it"
             }
@@ -54,7 +54,7 @@ class CacheAbleTest {
 
         @Test
         fun updateWithSameValueShouldBeIgnored() = assertCalled { shouldBeCalled ->
-            val cache = CacheAble("value") {
+            val cache = ValueWithCacheComputation("value") {
                 shouldBeCalled()
                 "cache-$it"
             }
@@ -69,7 +69,7 @@ class CacheAbleTest {
     class Reset {
         @Test
         fun shouldResetToInitialValues() {
-            val cache = CacheAble("value") {
+            val cache = ValueWithCacheComputation("value") {
                 "cache-$it"
             }
             cache.getValue().assert("value")

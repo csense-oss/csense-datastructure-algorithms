@@ -1,6 +1,6 @@
 package csense.kotlin.datastructures.caching
 
-public class CacheAble<Value, CachedType>(
+public class ValueWithCacheComputation<Value, CachedType>(
     private val initialValue: Value,
     private val calculateCache: (Value) -> CachedType
 ) {

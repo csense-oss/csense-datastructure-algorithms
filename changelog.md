@@ -3,7 +3,7 @@
 ## 0.0.42
 
 - more extensions and more tests for LockableValue
-- added CacheAble a value holder with a cached value (that gets computed on every update to the value)
+- added ValueWithCacheComputation a value holder with a cached value (that gets computed on every update to the value)
 
 ## 0.0.41
 

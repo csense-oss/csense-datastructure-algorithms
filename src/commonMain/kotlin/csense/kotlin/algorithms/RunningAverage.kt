@@ -4,7 +4,7 @@ package csense.kotlin.algorithms
 
 import csense.kotlin.annotations.numbers.IntLimit
 import csense.kotlin.annotations.numbers.LongLimit
-import csense.kotlin.datastructures.caching.CacheAble
+import csense.kotlin.datastructures.caching.ValueWithCacheComputation
 
 /**
  *
@@ -23,8 +23,8 @@ public abstract class RunningAverageAbstract<T : Number> {
     /**
      *
      */
-    private val aggregatedValue: CacheAble<T, Double> by lazy {
-        CacheAble(zero) {
+    private val aggregatedValue: ValueWithCacheComputation<T, Double> by lazy {
+        ValueWithCacheComputation(zero) {
             it.toDouble() / numberCount
         }
     }
@@ -127,7 +127,7 @@ public abstract class RunningAverageCappedAbstract<T : Number>(
      * How many values we have set of the available elements in the array
      */
     @Suppress("InheritanceInitializationOrder")
-    private val valuesSet: CacheAble<Int, Double> = CacheAble(
+    private val valuesSet: ValueWithCacheComputation<Int, Double> = ValueWithCacheComputation(
         initialValue = 0
     ) { valuesSet: Int ->
         takeValues(valuesSet).sumByDouble(Number::toDouble) / valuesSet

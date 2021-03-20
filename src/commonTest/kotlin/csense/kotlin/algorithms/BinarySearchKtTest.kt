@@ -12,7 +12,7 @@ class BinarySearchKtTest {
      * also the extension is on array types, which the STD algorithm is not.
      */
     @Test
-    fun testBinarySearchComplexData() {
+    fun binarySearchComplexData() {
         //constructed in order  otherwise binary search does not work..
         val array = arrayOf(RandomComplexData("Test1", 0), RandomComplexData("Test2", 1), RandomComplexData("Test3", 2))
         //we want to find Test2, and
@@ -26,10 +26,10 @@ class BinarySearchKtTest {
 
 
     @Test
-    fun testBinarySearch() {
+    fun binarySearch() {
         val strArray = arrayListOf("a", "b", "c", "d")
         val indexOfA = strArray.binarySearch { item: String, _: Int ->
-            return@binarySearch item.compareTo("a").itemComparison.toComparing()
+            item.compareTo("a").itemComparison.toComparing()
         }
         indexOfA.assertNotNullAndEquals(0)
 
