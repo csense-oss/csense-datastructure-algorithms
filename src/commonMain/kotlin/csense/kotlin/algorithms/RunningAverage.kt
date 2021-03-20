@@ -25,6 +25,7 @@ public abstract class RunningAverageAbstract<T : Number> {
 
     /**
      * The neutral element
+     * @TimeComplexity O(1)
      */
     protected abstract val zero: T
 
@@ -33,19 +34,30 @@ public abstract class RunningAverageAbstract<T : Number> {
      * @param first T
      * @param second T
      * @return T
+     * @TimeComplexity O(1)
      */
     protected abstract fun addValues(first: T, second: T): T
 
-
+    /**
+     *
+     * @param newValue T
+     * @TimeComplexity O(1)
+     */
     public fun addValue(newValue: T) {
         aggregatedValue.value = addValues(aggregatedValue.value, newValue)
         numberCount += 1
     }
 
+    /**
+     *
+     * @TimeComplexity O(1)
+     */
     public val average: Double
         get() = aggregatedValue.cachedValue
 
-
+    /**
+     * @TimeComplexity O(1)
+     */
     public fun reset() {
         aggregatedValue.resetToInitial()
         numberCount = 0

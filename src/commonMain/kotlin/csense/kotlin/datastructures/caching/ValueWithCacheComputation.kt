@@ -11,6 +11,7 @@ public class ValueWithCacheComputation<Value, CachedType>(
     /**
      * The cached value (based on the value)
      * If this has not been computed it will be on retrieval
+     * @TimeComplexity O(calculateCache)
      */
     public val cachedValue: CachedType by _cachedValue
 
@@ -18,6 +19,7 @@ public class ValueWithCacheComputation<Value, CachedType>(
      * The stored value
      * getting has no side effect
      * setting has the side effect of invaliding the current cached value
+     * @TimeComplexity O(calculateCache)
      */
     public var value: Value = initialValue
         set(newValue) {
@@ -30,6 +32,7 @@ public class ValueWithCacheComputation<Value, CachedType>(
 
     /**
      * Resets the value to the initial value (this also invalidates the cached value)
+     * @TimeComplexity O(1)
      */
     public fun resetToInitial() {
         value = initialValue

@@ -11,6 +11,7 @@ public class CachedComputableValue<Value>(
 
     /**
      * The current (cached) value or the [computeFunction] will be executed and returned (and saved)
+     * @TimeComplexity O(computeFunction)
      */
     public val value: Value
         get() = cachedValue ?: computeFunction().also {
@@ -30,6 +31,7 @@ public class CachedComputableValue<Value>(
      * @param thisRef Any?
      * @param property KProperty<*>
      * @return Value
+     * @TimeComplexity O(value)
      */
     public operator fun getValue(thisRef: Any?, property: KProperty<*>): Value =
         value
