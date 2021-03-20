@@ -5,9 +5,6 @@ library.
 
 ## Showcases
 
-### Running Average
-
-
 ### SetOnceBool
 
 A very normal pattern is to set a value once, especially booleans
@@ -33,4 +30,50 @@ fun doSomething() = x.lockWithAction {
 
 }
 ```
+
+### CachedComputableValue
+
+A very normal pattern is to compute a value lazy but with the ability to invalidate the cached value
+
+#### Before
+
+```kotlin
+class MyClass {
+    private var myInnerCache: String? = null
+
+    val myCache: String
+        get() = myInnerCache ?: computeExpensiveString().also {
+            myInnerCache = it
+        }
+
+    private fun computeExpensiveString(): String {
+        return "42+42"
+    }
+
+    fun invalidate() {
+        myInnerCache = null
+    }
+}
+```
+
+#### After
+
+```kotlin
+class MyClass {
+    private val myInnerCache = CachedComputableValue {
+        "42+42"
+    }
+    val myCache: String by myInnerCache
+
+    fun invalidate() {
+        myInnerCache.invalidate()
+    }
+}
+```
+
+### Running Average
+
+#### Before
+
+#### After
 

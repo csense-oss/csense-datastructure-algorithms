@@ -4,7 +4,7 @@
 
 - more extensions and more tests for LockableValue
 - added ValueWithCacheComputation a value holder with a cached value (that gets computed on every update to the value)
-
+- added CachedComputableValue as a simpler way to write a cached "computable" value (see readme for example)
 
 ## 0.0.41
 

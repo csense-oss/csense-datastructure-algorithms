@@ -41,6 +41,7 @@ public open class LockableValue<T>(
     /**
      * Tells if this is locked (inverse of [isUnlocked]
      * @return [Boolean] true if this is locked, false means its [isUnlocked]
+     * @TimeComplexity O(1)
      */
     public fun isLocked(): Boolean {
         return remainingUpdateCount <= 0
@@ -49,6 +50,7 @@ public open class LockableValue<T>(
     /**
      * Tells if this is unlocked (inverse of [isLocked])
      * @return [Boolean] true if this is unlocked, false means its [isLocked]
+     * @TimeComplexity O(1)
      */
     public fun isUnlocked(): Boolean {
         return !isLocked()
@@ -57,6 +59,7 @@ public open class LockableValue<T>(
     /**
      * Shortcut for locking this value.
      * Does nothing if this is locked already
+     * @TimeComplexity O(1)
      */
     public fun lock() {
         lockWith(value)
@@ -65,6 +68,7 @@ public open class LockableValue<T>(
     /**
      * Shortcut for locking with the given [newValue].
      * Does nothing if this is locked already
+     * @TimeComplexity O(1)
      */
     public fun lockWith(newValue: T): Unit = whenUnlocked {
         value = newValue
@@ -79,6 +83,7 @@ public open class LockableValue<T>(
  * @param any Any?
  * @param property KProperty<*>
  * @return T
+ * @TimeComplexity O(1)
  */
 public operator fun <T> LockableValue<T>.getValue(any: Any?, property: KProperty<*>): T {
     return value

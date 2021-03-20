@@ -37,7 +37,7 @@ public enum class ItemComparison {
 public inline class IntItemComparison(public val int: Int)
 
 /**
- * Retrives access to [ItemComparison] features
+ * Retrieves access to [ItemComparison] features
  */
 public inline val Int.itemComparison: IntItemComparison
     get() = IntItemComparison(this)
@@ -47,6 +47,7 @@ public inline val Int.itemComparison: IntItemComparison
  * Compares a regular "compareTo" into a comparing.
  * @receiver [Int]
  * @return [ItemComparison]
+ * @TimeComplexity O(1)
  */
 public inline fun IntItemComparison.toComparing(): ItemComparison {
     return when {
@@ -64,6 +65,7 @@ public inline fun IntItemComparison.toComparing(): ItemComparison {
  * @param fromInclusive [Int]
  * @param toInclusive [Int]
  * @return [ItemComparison]
+ * @TimeComplexity O(1)
  */
 public inline fun IntItemComparison.compareToRange(
     fromInclusive: Int,
@@ -78,6 +80,7 @@ public inline fun IntItemComparison.compareToRange(
  * @receiver [Int]
  * @param intRange [IntRange]
  * @return [ItemComparison]
+ * @TimeComplexity O(1)
  */
 public inline fun IntItemComparison.compareToRange(
     intRange: IntRange

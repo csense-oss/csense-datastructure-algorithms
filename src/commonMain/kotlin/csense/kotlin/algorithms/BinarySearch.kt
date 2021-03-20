@@ -13,6 +13,7 @@ import csense.kotlin.annotations.numbers.*
  * @receiver [List]<T>
  * @param compareFnc [Function2]<T, [Int], [ItemComparison]>
  * @return [Int]? null if no predicate was equal, or the index if any was found to be equal.
+ * @TimeComplexity O(length * log_2(length))
  */
 @IntLimit(from = 0)
 public inline fun <T> List<T>.binarySearch(crossinline compareFnc: Function2<T, Int, ItemComparison>): Int? =
@@ -24,6 +25,7 @@ public inline fun <T> List<T>.binarySearch(crossinline compareFnc: Function2<T, 
  * @receiver [Array]<T>
  * @param compareFnc [Function2]<T, [Int], [ItemComparison]>
  * @return [Int]? null if no predicate was equal, or the index if any was found to be equal.
+ * @TimeComplexity O(length * log_2(length))
  */
 @IntLimit(from = 0)
 public inline fun <T> Array<T>.binarySearch(crossinline compareFnc: Function2<T, Int, ItemComparison>): Int? =
@@ -35,6 +37,7 @@ public inline fun <T> Array<T>.binarySearch(crossinline compareFnc: Function2<T,
  * @receiver [ShortArray]
  * @param compareFnc [Function2]<[Short], [Int], [ItemComparison]>
  * @return [Int]? null if no predicate was equal, or the index if any was found to be equal.
+ * @TimeComplexity O(length * log_2(length))
  */
 @IntLimit(from = 0)
 public inline fun ShortArray.binarySearch(crossinline compareFnc: Function2<Short, Int, ItemComparison>): Int? =
@@ -46,6 +49,7 @@ public inline fun ShortArray.binarySearch(crossinline compareFnc: Function2<Shor
  * @receiver [IntArray]
  * @param compareFnc Function2<[Int], [Int], [ItemComparison]>
  * @return [Int]? null if no predicate was equal, or the index if any was found to be equal.
+ * @TimeComplexity O(length * log_2(length))
  */
 @IntLimit(from = 0)
 public inline fun IntArray.binarySearch(crossinline compareFnc: Function2<Int, Int, ItemComparison>): Int? =
@@ -57,6 +61,7 @@ public inline fun IntArray.binarySearch(crossinline compareFnc: Function2<Int, I
  * @receiver [LongArray]
  * @param compareFnc [Function2]<[Long], [Int], [ItemComparison]>
  * @return [Int]? null if no predicate was equal, or the index if any was found to be equal.
+ * @TimeComplexity O(length * log_2(length))
  */
 @IntLimit(from = 0)
 public inline fun LongArray.binarySearch(crossinline compareFnc: Function2<Long, Int, ItemComparison>): Int? =
@@ -68,6 +73,7 @@ public inline fun LongArray.binarySearch(crossinline compareFnc: Function2<Long,
  * @receiver [FloatArray]
  * @param compareFnc [Function2]<[Float], [Int], [ItemComparison]>
  * @return [Int]? null if no predicate was equal, or the index if any was found to be equal.
+ * @TimeComplexity O(length * log_2(length))
  */
 @IntLimit(from = 0)
 public inline fun FloatArray.binarySearch(crossinline compareFnc: Function2<Float, Int, ItemComparison>): Int? =
@@ -79,6 +85,7 @@ public inline fun FloatArray.binarySearch(crossinline compareFnc: Function2<Floa
  * @receiver [DoubleArray]
  * @param compareFnc [Function2]<[Double], [Int], [ItemComparison]>
  * @return [Int]? null if no predicate was equal, or the index if any was found to be equal.
+ * @TimeComplexity O(length * log_2(length))
  */
 @IntLimit(from = 0)
 public inline fun DoubleArray.binarySearch(crossinline compareFnc: Function2<Double, Int, ItemComparison>): Int? =
@@ -94,6 +101,7 @@ public inline fun DoubleArray.binarySearch(crossinline compareFnc: Function2<Dou
  * @param constantGetter [Function1]<T>
  * @param compareFnc [Function2]<T, [Int], [ItemComparison]>
  * @return [Int]? null if no predicate was equal, or the index if any was found to be equal.
+ * @TimeComplexity O(length * log_2(length))
  */
 
 @IntLimit(from = 0)

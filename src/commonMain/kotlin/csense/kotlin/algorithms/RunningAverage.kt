@@ -14,15 +14,9 @@ import csense.kotlin.datastructures.caching.ValueWithCacheComputation
  */
 public abstract class RunningAverageAbstract<T : Number> {
 
-    /**
-     *
-     */
     @LongLimit(from = 0)
     private var numberCount: Long = 0
 
-    /**
-     *
-     */
     private val aggregatedValue: ValueWithCacheComputation<T, Double> by lazy {
         ValueWithCacheComputation(zero) {
             it.toDouble() / numberCount
@@ -42,24 +36,16 @@ public abstract class RunningAverageAbstract<T : Number> {
      */
     protected abstract fun addValues(first: T, second: T): T
 
-    /**
-     *
-     * @param newValue T
-     */
+
     public fun addValue(newValue: T) {
         aggregatedValue.value = addValues(aggregatedValue.value, newValue)
         numberCount += 1
     }
 
-    /**
-     *
-     */
     public val average: Double
         get() = aggregatedValue.cachedValue
 
-    /**
-     *
-     */
+
     public fun reset() {
         aggregatedValue.resetToInitial()
         numberCount = 0
