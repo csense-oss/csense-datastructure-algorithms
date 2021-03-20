@@ -47,7 +47,7 @@ public abstract class RunningAverageAbstract<T : Number> {
      * @param newValue T
      */
     public fun addValue(newValue: T) {
-        aggregatedValue.update(addValues(aggregatedValue.getValue(), newValue))
+        aggregatedValue.value = addValues(aggregatedValue.value, newValue)
         numberCount += 1
     }
 
@@ -55,13 +55,13 @@ public abstract class RunningAverageAbstract<T : Number> {
      *
      */
     public val average: Double
-        get() = aggregatedValue.getCachedValue()
+        get() = aggregatedValue.cachedValue
 
     /**
      *
      */
     public fun reset() {
-        aggregatedValue.reset()
+        aggregatedValue.resetToInitial()
         numberCount = 0
     }
 }
@@ -144,7 +144,7 @@ public abstract class RunningAverageCappedAbstract<T : Number>(
      * @param newValue T
      */
     public fun addValue(newValue: T) {
-        valuesSet.update(minOf(valuesSet.getValue() + 1, cappedNumberOfValues))
+        valuesSet.value = minOf(valuesSet.value + 1, cappedNumberOfValues)
         setValue(newValue, currentIndex)
         currentIndex = (currentIndex + 1).rem(cappedNumberOfValues)
     }
@@ -153,13 +153,13 @@ public abstract class RunningAverageCappedAbstract<T : Number>(
      *
      */
     public val average: Double
-        get() = valuesSet.getCachedValue()
+        get() = valuesSet.cachedValue
 
     /**
      *
      */
     public fun reset() {
-        valuesSet.reset()
+        valuesSet.resetToInitial()
         currentIndex = 0
         clearValues()
     }

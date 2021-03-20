@@ -7,36 +7,25 @@ import kotlin.test.Test
 
 class ValueWithCacheComputationTest {
 
-    @Test
-    fun getValue() {
-        val cache = ValueWithCacheComputation("value") {
-            failTest("cached values should only be computed on retrieval")
+    class Value {
+        @Test
+        fun get() {
+            val cache = ValueWithCacheComputation("value") {
+                failTest("cached values should only be computed on retrieval")
+            }
+            cache.value.assert("value")
         }
-        cache.getValue().assert("value")
-    }
-
-    @Test
-    fun getCachedValue() = assertCalled { shouldBeCalled ->
-        val cache = ValueWithCacheComputation("value") {
-            shouldBeCalled()
-            "cache-$it"
-        }
-        cache.getCachedValue().assert("cache-value")
-    }
-
-
-    class Update {
 
         @Test
         fun updateChangesBothTheValueAndCache() {
             val cache = ValueWithCacheComputation("value") {
                 "cache-$it"
             }
-            cache.getValue().assert("value")
-            cache.getCachedValue().assert("cache-value")
-            cache.update("1234")
-            cache.getValue().assert("1234")
-            cache.getCachedValue().assert("cache-1234")
+            cache.value.assert("value")
+            cache.cachedValue.assert("cache-value")
+            cache.value = "1234"
+            cache.value.assert("1234")
+            cache.cachedValue.assert("cache-1234")
         }
 
         @Test
@@ -45,11 +34,11 @@ class ValueWithCacheComputationTest {
                 shouldBeCalled()
                 "cache-$it"
             }
-            cache.getCachedValue().assert("cache-value")
-            cache.getCachedValue().assert("cache-value")
-            cache.update("value2")
-            cache.getCachedValue().assert("cache-value2")
-            cache.getCachedValue().assert("cache-value2")
+            cache.cachedValue.assert("cache-value")
+            cache.cachedValue.assert("cache-value")
+            cache.value = "value2"
+            cache.cachedValue.assert("cache-value2")
+            cache.cachedValue.assert("cache-value2")
         }
 
         @Test
@@ -58,28 +47,35 @@ class ValueWithCacheComputationTest {
                 shouldBeCalled()
                 "cache-$it"
             }
-            cache.getCachedValue().assert("cache-value")
-            cache.update("value")
-            cache.getCachedValue().assert("cache-value")
+            cache.cachedValue.assert("cache-value")
+            cache.value = "value"
+            cache.cachedValue.assert("cache-value")
+        }
+    }
+
+    class CachedValue {
+        @Test
+        fun get() = assertCalled { shouldBeCalled ->
+            val cache = ValueWithCacheComputation("value") {
+                shouldBeCalled()
+                "cache-$it"
+            }
+            cache.cachedValue.assert("cache-value")
         }
 
     }
 
-
-    class Reset {
-        @Test
-        fun shouldResetToInitialValues() {
-            val cache = ValueWithCacheComputation("value") {
-                "cache-$it"
-            }
-            cache.getValue().assert("value")
-            cache.update("newValue")
-            cache.getValue().assert("newValue")
-            cache.getCachedValue().assert("cache-newValue")
-            cache.reset()
-            cache.getValue().assert("value")
-            cache.getCachedValue().assert("cache-value")
+    @Test
+    fun resetToInitial() {
+        val cache = ValueWithCacheComputation("value") {
+            "cache-$it"
         }
-
+        cache.value.assert("value")
+        cache.value = "newValue"
+        cache.value.assert("newValue")
+        cache.cachedValue.assert("cache-newValue")
+        cache.resetToInitial()
+        cache.value.assert("value")
+        cache.cachedValue.assert("cache-value")
     }
 }

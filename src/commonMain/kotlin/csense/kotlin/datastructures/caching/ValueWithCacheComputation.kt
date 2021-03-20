@@ -4,34 +4,26 @@ public class ValueWithCacheComputation<Value, CachedType>(
     private val initialValue: Value,
     private val calculateCache: (Value) -> CachedType
 ) {
-    private var cachedValue: CachedType? = null
 
-    private var currentValue: Value = initialValue
-        set(value) {
-            field = value
-            invalidateCache()
+    private var _cachedValue: CachedType? = null
+    public val cachedValue: CachedType
+        get() = _cachedValue ?: calculateCache(value).also {
+            _cachedValue = it
+        }
+
+    public var value: Value = initialValue
+        set(newValue) {
+            if (newValue != value) {
+                field = newValue
+                invalidateCache()
+            }
         }
 
     private fun invalidateCache() {
-        cachedValue = null
+        _cachedValue = null
     }
 
-
-    public fun update(newValue: Value) {
-        if (newValue != currentValue) {
-            currentValue = newValue
-        }
-    }
-
-    public fun getCachedValue(): CachedType {
-        return cachedValue ?: calculateCache(currentValue).also {
-            cachedValue = it
-        }
-    }
-
-
-    public fun getValue(): Value = currentValue
-    public fun reset() {
-        currentValue = initialValue
+    public fun resetToInitial() {
+        value = initialValue
     }
 }
