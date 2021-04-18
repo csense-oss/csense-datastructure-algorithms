@@ -4,7 +4,6 @@ package csense.kotlin.algorithms
 
 import csense.kotlin.extensions.ranges.largest
 
-//TODO "inline" when feature available.
 /**
  * A comparison between 2 elements;
  * if equal (x == y) then "Equal"
@@ -15,7 +14,7 @@ public enum class ItemComparison {
     /**
      * x > y then Larger than
      */
-    LargerThan,
+    GreaterThan,
 
     /**
      * x < y then less than.
@@ -52,7 +51,7 @@ public inline val Int.itemComparison: IntItemComparison
 public inline fun IntItemComparison.toComparing(): ItemComparison {
     return when {
         int == 0 -> ItemComparison.Equal
-        int > 0 -> ItemComparison.LargerThan
+        int > 0 -> ItemComparison.GreaterThan
         else -> ItemComparison.LessThan
     }
 }
@@ -87,7 +86,7 @@ public inline fun IntItemComparison.compareToRange(
 ): ItemComparison {
     return when {
         int in intRange -> ItemComparison.Equal
-        int > intRange.largest -> ItemComparison.LargerThan
+        int > intRange.largest -> ItemComparison.GreaterThan
         else -> ItemComparison.LessThan
     }
 }

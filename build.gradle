@@ -4,7 +4,7 @@ buildscript {
     ext.junit5Version = "5.7.1"
     ext.csenseAnnotationVersion = "0.0.41"
     ext.useCsenseVersion = "0.0.46"
-    ext.useCsenseTestsVersion = "0.0.46"
+    ext.useCsenseTestsVersion = "0.0.48"
 
 
     //library settings
@@ -38,7 +38,7 @@ plugins {
 
 
 repositories {
-    jcenter()
+    mavenCentral()
     maven {
         url 'https://pkgs.dev.azure.com/csense-oss/csense-oss/_packaging/csense-oss/maven/v1'
         name 'csense-oss'

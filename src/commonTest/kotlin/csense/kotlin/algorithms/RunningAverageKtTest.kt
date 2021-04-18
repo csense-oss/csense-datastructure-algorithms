@@ -1,6 +1,6 @@
 package csense.kotlin.algorithms
 
-import kotlin.test.Test
+import kotlin.test.*
 
 class RunningAverageIntTest {
 

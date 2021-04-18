@@ -2,8 +2,7 @@
 
 package csense.kotlin.algorithms
 
-import csense.kotlin.Function2
-import csense.kotlin.Function1
+import csense.kotlin.*
 import csense.kotlin.annotations.numbers.*
 
 
@@ -117,7 +116,7 @@ public inline fun <T> GenericAlgorithms.binarySearch(
         val item = constantGetter(mid)
         when (compareFnc(item, mid)) {
             ItemComparison.LessThan -> start = mid + 1
-            ItemComparison.LargerThan -> end = mid
+            ItemComparison.GreaterThan -> end = mid
             ItemComparison.Equal -> return mid
         }
     }
