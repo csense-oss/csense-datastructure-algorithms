@@ -1,16 +1,27 @@
 buildscript {
 
-    ext.coroutinesVersion = "1.4.3"
-    ext.junit5Version = "5.7.1"
-    ext.csenseAnnotationVersion = "0.0.41"
-    ext.useCsenseVersion = "0.0.46"
-    ext.useCsenseTestsVersion = "0.0.49"
+    //https://github.com/Kotlin/kotlinx.coroutines
+    ext.coroutinesVersion = "1.6.0-RC2"
+    //https://github.com/csense-oss/csense-kotlin-test
+    ext.csenseTestsVersion = "0.0.52"
+    //https://github.com/csense-oss/csense-kotlin-annotations
+    ext.csenseAnnotationVersion = "0.0.50"
+
+    //https://github.com/JetBrains/kotlin/releases
+    ext.kotlin_version = "1.6.10"
+
+    //https://github.com/Kotlin/kotlinx-benchmark
+    ext.kotlinx_benchmark_version = "0.4.0"
+
+    ext.junit5Version = "5.8.2"
+    ext.csenseAnnotationVersion = "0.0.50"
+    ext.useCsenseVersion = "0.0.52"
 
 
     //library settings
     ext.csenseUserOrg = "csense-oss"
     ext.csenseRepoName = "maven"
-    ext.csenseVersionName = "0.0.41"
+    ext.csenseVersionName = "0.0.50"
     ext.csenseGroupId = "csense.kotlin"
     ext.csenseArtifactId = "csense-kotlin-datastructures-algorithms"
     ext.csenseGithub = "csense-oss/csense-kotlin"
@@ -30,12 +41,13 @@ buildscript {
 
 
 plugins {
-    id "net.linguica.maven-settings" version "0.5"
-    id 'org.jetbrains.kotlin.multiplatform' version "1.4.32"
-    id("org.jetbrains.dokka") version "1.4.20"
+    //https://github.com/JetBrains/kotlin
+    id 'org.jetbrains.kotlin.multiplatform' version "$kotlin_version"
     id "maven-publish"
-    id 'org.jetbrains.kotlinx.benchmark' version '0.3.0'
-    id("org.owasp.dependencycheck") version "6.1.5"
+    //https://github.com/Kotlin/kotlinx-benchmark
+    id 'org.jetbrains.kotlinx.benchmark' version "$kotlinx_benchmark_version"
+    //https://github.com/jeremylong/DependencyCheck https://plugins.gradle.org/plugin/org.owasp.dependencycheck
+    id "org.owasp.dependencycheck" version "6.5.0.1"
 }
 
 
@@ -69,8 +81,8 @@ kotlin {
             dependencies {
                 implementation kotlin('test-common')
                 implementation kotlin('test-annotations-common')
-                implementation "csense.kotlin:csense-kotlin-tests:$useCsenseTestsVersion"
-                implementation "org.jetbrains.kotlinx:kotlinx-benchmark-runtime:0.3.0"
+                implementation "csense.kotlin:csense-kotlin-tests:$csenseTestsVersion"
+                implementation "org.jetbrains.kotlinx:kotlinx-benchmark-runtime:$kotlinx_benchmark_version"
             }
         }
         jvmMain {
@@ -128,7 +140,7 @@ task uploadProd(dependsOn: ["assemble", "allTests", "publish"])
 benchmark {
     targets {
         register("jvmTest") {
-            jmhVersion = "1.29" // available only for JVM compilations & Java source sets
+            jmhVersion = "1.33" // available only for JVM compilations & Java source sets
         }
     }
 }
