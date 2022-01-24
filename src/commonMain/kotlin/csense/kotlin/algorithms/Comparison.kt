@@ -3,29 +3,36 @@
 package csense.kotlin.algorithms
 
 import csense.kotlin.extensions.ranges.largest
+import kotlin.jvm.*
 
-//TODO "inline" when feature available.
 /**
  * A comparison between 2 elements;
  * if equal (x == y) then "Equal"
  * if x > y then Larger than
  * if x < y then less than.
  */
-public enum class ItemComparison {
-    /**
-     * x > y then Larger than
-     */
-    LargerThan,
+@JvmInline
+public value class ItemComparison private constructor(private val type: Int) : Comparable<ItemComparison> {
+    public companion object {
 
-    /**
-     * x < y then less than.
-     */
-    LessThan,
+        /**
+         * x > y then Larger than
+         */
+        public val LargerThan: ItemComparison = ItemComparison(1)
 
-    /**
-     * (x == y) then "Equal"
-     */
-    Equal
+        /**
+         * x < y then less than.
+         */
+        public val LessThan: ItemComparison = ItemComparison(-1)
+
+        /**
+         * (x == y) then "Equal"
+         */
+        public val Equal: ItemComparison = ItemComparison(0)
+    }
+
+    override fun compareTo(other: ItemComparison): Int =
+        this.type.compareTo(other.type)
 }
 
 //region scoped Int extensions
@@ -34,7 +41,8 @@ public enum class ItemComparison {
  * @property int Int
  * @constructor
  */
-public inline class IntItemComparison(public val int: Int)
+@JvmInline
+public value class IntItemComparison(public val int: Int)
 
 /**
  * Retrives access to [ItemComparison] features

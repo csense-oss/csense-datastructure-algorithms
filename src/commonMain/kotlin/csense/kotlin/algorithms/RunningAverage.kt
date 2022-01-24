@@ -151,7 +151,7 @@ public abstract class RunningAverageCappedAbstract<T : Number>(
      *
      */
     public val average: Double
-        get() = takeValues(valuesSet).sumByDouble(Number::toDouble) / valuesSet
+        get() = takeValues(valuesSet).sumOf(Number::toDouble) / valuesSet
     
     /**
      *

@@ -14,7 +14,7 @@ public open class SetOnce<T>(
 
 
 /**
- * Since a readonly [Boolean] is usually preferred, there are times where you want a [Boolean] value to be able to be set once after initialization and then be "Locked"
+ * Since a readonly [Boolean] is usually preferred, there are times when you want a [Boolean] value to be able to be set once after initialization and then be "Locked"
  */
 public class SetOnceBool(
         initialValue: Boolean,

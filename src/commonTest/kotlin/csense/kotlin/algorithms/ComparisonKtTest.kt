@@ -35,3 +35,4 @@ class ComparisonKtTest {
         5.itemComparison.compareToRange(0 until 5).assert(ItemComparison.LargerThan)
     }
 }
+
