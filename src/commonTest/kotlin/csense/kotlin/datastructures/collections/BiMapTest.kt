@@ -3,10 +3,6 @@ package csense.kotlin.datastructures.collections
 import csense.kotlin.tests.assertions.*
 import kotlin.test.*
 
-class BiMapTest {
-
-}
-
 class MutableBiMapImplTest {
 
     class Put {
@@ -158,10 +154,10 @@ class DualMapBiMapTest {
         val empty = BiMapImmutableImpl<String, String>()
         empty.size.assert(0)
 
-        val single = BiMapImmutableImpl<String, String>("1" to "a")
+        val single = BiMapImmutableImpl("1" to "a")
         single.size.assert(1)
 
-        val multiple = BiMapImmutableImpl<String, String>("1" to "a", "2" to "b")
+        val multiple = BiMapImmutableImpl("1" to "a", "2" to "b")
         multiple.size.assert(2)
     }
 
