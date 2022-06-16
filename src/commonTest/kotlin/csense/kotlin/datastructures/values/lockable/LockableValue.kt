@@ -1,4 +1,4 @@
-package csense.kotlin.datastructures.values
+package csense.kotlin.datastructures.values.lockable
 
 import csense.kotlin.tests.assertions.*
 import kotlin.test.*
@@ -105,6 +105,19 @@ class LockableValueTest {
         }
         assertNotCalled("should still lock after first use") {
             unlocked.lockWithAction(it)
+        }
+    }
+
+    @Test
+    fun lockableValueTIfLocked() {
+        val locked = LockableValue(0, "")
+        assertCalled {
+            locked.ifLocked(it)
+        }
+
+        val unlocked = LockableValue(1, "")
+        assertNotCalled("should still lock after first use") {
+            unlocked.ifLocked(it)
         }
     }
 }

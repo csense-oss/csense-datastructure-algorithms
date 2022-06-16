@@ -1,5 +1,6 @@
-package csense.kotlin.datastructures.values
+package csense.kotlin.datastructures.values.lockable
 
+import csense.kotlin.datastructures.values.lockable.*
 import csense.kotlin.tests.assertions.assert
 import kotlin.test.Test
 

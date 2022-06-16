@@ -1,15 +1,10 @@
-package csense.kotlin.datastructures.values
+package csense.kotlin.datastructures.values.lockable
 
 import csense.kotlin.*
 
-/**
- *
- * @param T
- * @constructor
- */
 public open class SetOnce<T>(
-        initialValue: T,
-        onUpdateRejected: EmptyFunction? = null
+    initialValue: T,
+    onUpdateRejected: EmptyFunction? = null
 ) : LockableValue<T>(1, initialValue, onUpdateRejected)
 
 
@@ -17,7 +12,6 @@ public open class SetOnce<T>(
  * Since a readonly [Boolean] is usually preferred, there are times when you want a [Boolean] value to be able to be set once after initialization and then be "Locked"
  */
 public class SetOnceBool(
-        initialValue: Boolean,
-        onUpdateRejected: EmptyFunction? = null
+    initialValue: Boolean,
+    onUpdateRejected: EmptyFunction? = null
 ) : SetOnce<Boolean>(initialValue, onUpdateRejected)
-

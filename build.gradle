@@ -1,19 +1,20 @@
 buildscript {
 
     //https://github.com/Kotlin/kotlinx.coroutines
-    ext.coroutinesVersion = "1.6.0-RC2"
+    ext.coroutinesVersion = "1.6.1"
     //https://github.com/csense-oss/csense-kotlin-test
-    ext.csenseTestsVersion = "0.0.52"
+    ext.csenseTestsVersion = "0.0.57"
     //https://github.com/csense-oss/csense-kotlin-annotations
     ext.csenseAnnotationVersion = "0.0.50"
 
     //https://github.com/JetBrains/kotlin/releases
-    ext.kotlin_version = "1.6.10"
+    ext.kotlin_version = "1.7.0"
 
     //https://github.com/Kotlin/kotlinx-benchmark
-    ext.kotlinx_benchmark_version = "0.4.1"
+    ext.kotlinx_benchmark_version = "0.4.2"
 
-    ext.useCsenseVersion = "0.0.54"
+    // https://github.com/csense-oss/csense-kotlin
+    ext.useCsenseVersion = "0.0.59"
 
 
     //library settings
@@ -45,7 +46,7 @@ plugins {
     //https://github.com/Kotlin/kotlinx-benchmark
     id 'org.jetbrains.kotlinx.benchmark' version "$kotlinx_benchmark_version"
     //https://github.com/jeremylong/DependencyCheck https://plugins.gradle.org/plugin/org.owasp.dependencycheck
-    id "org.owasp.dependencycheck" version "6.5.3"
+    id "org.owasp.dependencycheck" version "7.0.3"
 }
 
 
@@ -148,7 +149,7 @@ benchmark {
     targets {
         register("jvmTest") {
             //https://github.com/openjdk/jmh
-            jmhVersion = "1.34" // available only for JVM compilations & Java source sets
+            jmhVersion = "1.35" // available only for JVM compilations & Java source sets
         }
     }
 }

@@ -1,20 +1,20 @@
-package csense.kotlin.datastructures.values
+package csense.kotlin.datastructures.values.lockable
 
 import csense.kotlin.*
-import csense.kotlin.annotations.numbers.IntLimit
+import csense.kotlin.annotations.numbers.*
 import kotlin.reflect.*
 
 /**
  * A mutable container that locks the amount of updates that are allowed (or if forced to lock)
  * Can never be unlocked once locked
  * @param T the type of value we are to contain
- * @property maxUpdateCount [Int] the amount of updates that are allowed
+ * @property remainingUpdateCount [Int] the amount of updates that are allowed
  * @property value T the starting value that "may" be updated up to the provided update count
  */
 public open class LockableValue<T>(
-        @IntLimit(from = 1) maxUpdateCount: Int,
-        initialValue: T,
-        private val onUpdateRejected: EmptyFunction? = null
+    @IntLimit(from = 1) maxUpdateCount: Int,
+    initialValue: T,
+    private val onUpdateRejected: EmptyFunction? = null
 ) {
     /**
      * How many update counts that are left before this value is locked.
@@ -90,7 +90,7 @@ public operator fun <T> LockableValue<T>.setValue(item: Any?, property: KPropert
  * @param action [ReceiverFunctionUnit]<[LockableValue]<[T]> the callback to invoke if this is [LockableValue.isUnlocked]
  */
 public inline fun <T> LockableValue<T>.whenUnlocked(
-        action: ReceiverFunctionUnit<LockableValue<T>>
+    action: ReceiverFunctionUnit<LockableValue<T>>
 ) {
     if (isUnlocked()) {
         action(this)
@@ -99,10 +99,21 @@ public inline fun <T> LockableValue<T>.whenUnlocked(
 
 /**
  * Runs the given action iff this is not locked, if it is locked, then nothing is performed
+ * @param onUnlocked EmptyFunction 
  */
 public inline fun <T> LockableValue<T>.lockWithAction(
-        onUnlocked: EmptyFunction
+    onUnlocked: EmptyFunction
 ): Unit = whenUnlocked {
     lock()
     onUnlocked()
+}
+
+/**
+ * Performs the given [action] if this [LockableValue.isLocked]
+ * @param action EmptyFunction 
+ */
+public inline fun <T> LockableValue<T>.ifLocked(action: EmptyFunction) {
+    if (isLocked()) {
+        action()
+    }
 }

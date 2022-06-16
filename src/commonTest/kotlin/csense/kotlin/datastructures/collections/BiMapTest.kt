@@ -111,7 +111,7 @@ class MutableBiMapImplTest {
         fun found() {
             val map = MutableBiMapImpl<String, String>()
             map.put("key", "value")
-            map.removeByKey("key").assertNotNullAndEquals("value")
+            map.removeByKey("key").assert("value")
             map.size.assert(0)
             map.keyMap.assertEmpty()
             map.valueMap.assertEmpty()
@@ -138,7 +138,7 @@ class MutableBiMapImplTest {
         fun found() {
             val map = MutableBiMapImpl<String, String>()
             map.put("key", "value")
-            map.removeByValue("value").assertNotNullAndEquals("key")
+            map.removeByValue("value").assert("key")
             map.size.assert(0)
             map.keyMap.assertEmpty()
             map.valueMap.assertEmpty()
@@ -178,12 +178,20 @@ class DualMapBiMapTest {
 
         @Test
         fun multiple() {
-            TODO()
+            val result = BiMapImmutableImpl(
+                "1" to "a",
+                "2" to "b",
+                "3" to "3"
+            ).toMap()
+            result.assertSize(3)
+            result.assertContains("1" to "a")
+            result.assertContains("2" to "b")
+            result.assertContains("3" to "3")
         }
     }
 }
 
 private fun <Key, Value> BiMap<Key, Value>.assertBothWays(key: Key, value: Value) {
-    getKeyBy(value).assertNotNullAndEquals(key)
-    getValueBy(key).assertNotNullAndEquals(value)
+    getKeyBy(value).assertByEquals(key)
+    getValueBy(key).assertByEquals(value)
 }

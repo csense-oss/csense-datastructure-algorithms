@@ -1,7 +1,6 @@
 package csense.kotlin.algorithms
 
-import csense.kotlin.tests.assertions.assertNotNullAndEquals
-import csense.kotlin.tests.assertions.assertNull
+import csense.kotlin.tests.assertions.*
 import kotlin.test.Test
 
 class BinarySearchKtTest {
@@ -19,7 +18,7 @@ class BinarySearchKtTest {
         val result = array.binarySearch { data, _ ->
             data.name.compareTo("Test2").itemComparison.toComparing()
         }
-        result.assertNotNullAndEquals(1)
+        result.assert(1)
     }
 
     data class RandomComplexData(val name: String, val order: Int)
@@ -31,12 +30,12 @@ class BinarySearchKtTest {
         val indexOfA = strArray.binarySearch { item: String, _: Int ->
             return@binarySearch item.compareTo("a").itemComparison.toComparing()
         }
-        indexOfA.assertNotNullAndEquals(0)
+        indexOfA.assert(0)
 
         val indexOfB = strArray.binarySearch { item: String, _: Int ->
             item.compareTo("b").itemComparison.toComparing()
         }
-        indexOfB.assertNotNullAndEquals(1)
+        indexOfB.assert(1)
 
         val indexOfq = strArray.binarySearch { item: String, _: Int ->
             item.compareTo("q").itemComparison.toComparing()
@@ -47,26 +46,10 @@ class BinarySearchKtTest {
         val indexOfIndex = strArray.binarySearch { _: String, index: Int ->
             (index - 3).itemComparison.toComparing()
         }
-        indexOfIndex.assertNotNullAndEquals(3)
+        indexOfIndex.assert(3)
 
 
     }
 
 
-    class ListTBinarySearchComparere {
-        @Test
-        fun empty() {
-            //TODO test empty condition here.
-        }
-
-        @Test
-        fun single() {
-            //TODO test single element condition here.
-        }
-
-        @Test
-        fun multiple() {
-            //TODO test multiple element condition here.
-        }
-    }
 }

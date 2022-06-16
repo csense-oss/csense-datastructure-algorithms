@@ -7,6 +7,7 @@ public inline fun <Key, Value> Map<Key, Value>.computeDiff(
     other: Map<Key, Value>,
     crossinline areValuesEqual: (key: Key, fromValue: Value, toValue: Value) -> Boolean
 ): DiffResultMap<Key, Value> {
+    
     val uniqueKeysInFirst = HashMap<Key, Value>()
     val sameContent = HashMap<Key, Value>()
     val changedContent = HashMap<Key, Pair<Value, Value>>()
@@ -14,12 +15,12 @@ public inline fun <Key, Value> Map<Key, Value>.computeDiff(
     this.forEach {
         val otherValue = other[it.key]
         if (otherValue == null) {
-            uniqueKeysInFirst.put(it.key, it.value) //TODO csense 0.0.55
+            uniqueKeysInFirst.put(it)
         } else {
             if (areValuesEqual(it.key, it.value, otherValue)) {
-                sameContent[it.key] = it.value //TODO csense 0.0.55
+                sameContent.put(it)
             } else {
-                changedContent[it.key] = Pair(it.value, otherValue) //TODO csense 0.0.55
+                changedContent[it.key] = Pair(it.value, otherValue)
             }
         }
     }
