@@ -89,7 +89,16 @@ public class SimpleLRUCache<Key, Value>(
         if (key == null) {
             return null
         }
-        return map[key]
+        val value = map[key] ?: return null
+        map.remove(key)
+        map[key] = value
+        return value
+    }
+
+    private fun moveToBack(key: Key, value: Value){
+        map.moveToBack(key)
+        map.remove(key)
+        map[key] = value
     }
 
     /**
@@ -194,4 +203,8 @@ public class SimpleLRUCache<Key, Value>(
     private fun getLeastValidCacheSize(@IntLimit(from = 1) size: Int): Int {
         return size.coerceAtLeast(1)
     }
+}
+
+public inline fun Map<Key, Value>.moveToBack(){
+
 }

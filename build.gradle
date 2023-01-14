@@ -1,17 +1,17 @@
 buildscript {
 
     //https://github.com/Kotlin/kotlinx.coroutines
-    ext.coroutinesVersion = "1.6.1"
+    ext.coroutinesVersion = "1.6.4"
     //https://github.com/csense-oss/csense-kotlin-test
-    ext.csenseTestsVersion = "0.0.57"
+    ext.csenseTestsVersion = "0.0.58"
     //https://github.com/csense-oss/csense-kotlin-annotations
     ext.csenseAnnotationVersion = "0.0.50"
 
     //https://github.com/JetBrains/kotlin/releases
-    ext.kotlin_version = "1.7.0"
+    ext.kotlin_version = "1.7.20"
 
     //https://github.com/Kotlin/kotlinx-benchmark
-    ext.kotlinx_benchmark_version = "0.4.2"
+    ext.kotlinx_benchmark_version = "0.4.5"
 
     // https://github.com/csense-oss/csense-kotlin
     ext.useCsenseVersion = "0.0.59"
@@ -46,7 +46,7 @@ plugins {
     //https://github.com/Kotlin/kotlinx-benchmark
     id 'org.jetbrains.kotlinx.benchmark' version "$kotlinx_benchmark_version"
     //https://github.com/jeremylong/DependencyCheck https://plugins.gradle.org/plugin/org.owasp.dependencycheck
-    id "org.owasp.dependencycheck" version "7.0.3"
+    id "org.owasp.dependencycheck" version "7.2.1"
 }
 
 
