@@ -1,5 +1,10 @@
 package csense.kotlin.datastructures.collections
 
+import csense.kotlin.datastructures.collections.lru.*
+import csense.kotlin.datastructures.collections.maps.*
+import csense.kotlin.datastructures.collections.maps.bimap.*
+import csense.kotlin.datastructures.collections.maps.bimap.BiMapImmutableImpl
+import csense.kotlin.datastructures.collections.maps.bimap.MutableBiMapImpl
 import csense.kotlin.tests.assertions.*
 import kotlin.test.*
 

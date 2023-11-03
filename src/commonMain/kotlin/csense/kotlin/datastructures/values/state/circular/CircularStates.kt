@@ -1,8 +1,9 @@
-package csense.kotlin.datastructures.values.state
+package csense.kotlin.datastructures.values.state.circular
 
 import csense.kotlin.*
 import csense.kotlin.annotations.collections.*
 import csense.kotlin.annotations.numbers.*
+import csense.kotlin.extensions.primitives.*
 
 public class CircularStates<T>(
     @CollectionSizeAtLeast(1)

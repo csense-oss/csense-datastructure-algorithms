@@ -1,4 +1,6 @@
-package csense.kotlin.datastructures.values.state
+package csense.kotlin.datastructures.values.state.swapable
+
+import csense.kotlin.datastructures.values.state.circular.*
 
 public open class SwapValue<T>(
     initial: T,

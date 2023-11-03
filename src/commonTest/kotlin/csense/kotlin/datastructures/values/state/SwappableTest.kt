@@ -1,5 +1,6 @@
 package csense.kotlin.datastructures.values.state
 
+import csense.kotlin.datastructures.values.state.swapable.*
 import csense.kotlin.tests.assertions.*
 import kotlin.test.*
 

@@ -1,4 +1,4 @@
-package csense.kotlin.datastructures.values.state
+package csense.kotlin.datastructures.values.state.swapable
 
 public class SwapBoolean(
     initialValue: Boolean

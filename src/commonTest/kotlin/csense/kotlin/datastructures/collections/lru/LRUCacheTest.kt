@@ -1,31 +1,31 @@
-package csense.kotlin.datastructures.collections
+package csense.kotlin.datastructures.collections.lru
 
 import csense.kotlin.tests.assertions.*
 import kotlin.test.*
 
-class SimpleLRUCacheTest {
+class LRUCacheTest {
     
     @Test
     fun put() {
-        val smallCache = SimpleLRUCache<String, String>(1)
+        val smallCache = LRUCache<String, String>(1)
         smallCache.put("1234", "1234").assertNull("should not evict any key")
-        smallCache.put("abc", "abc").assertNotNullAndEquals("1234", "should evict the first key")
+        smallCache.put("abc", "abc").assert("1234", "should evict the first key")
         
-        val largeCache = SimpleLRUCache<String, String>(5)
+        val largeCache = LRUCache<String, String>(5)
         for (i in 0 until 5) {
             largeCache.put(i.toString(), i.toString())
         }
         //now lets see that we also get the order and the count still matches.
-        largeCache.put("a1", "a1").assertNotNullAndEquals("0")
-        largeCache.put("a2", "a2").assertNotNullAndEquals("1")
-        largeCache.put("a3", "a3").assertNotNullAndEquals("2")
-        largeCache.put("a4", "a4").assertNotNullAndEquals("3")
-        largeCache.put("a5", "a5").assertNotNullAndEquals("4")
+        largeCache.put("a1", "a1").assert("0")
+        largeCache.put("a2", "a2").assert("1")
+        largeCache.put("a3", "a3").assert("2")
+        largeCache.put("a4", "a4").assert("3")
+        largeCache.put("a5", "a5").assert("4")
     }
     
     @Test
     fun containsKey() {
-        val smallCache = SimpleLRUCache<String, String>(2)
+        val smallCache = LRUCache<String, String>(2)
         smallCache.put("1234", "1234")
         smallCache.containsKey("1234").assertTrue()
         smallCache.containsKey("123").assertFalse()
@@ -46,7 +46,7 @@ class SimpleLRUCacheTest {
     
     @Test
     fun notContainsKey() {
-        val smallCache = SimpleLRUCache<String, String>(2)
+        val smallCache = LRUCache<String, String>(2)
         smallCache.put("1234", "1234")
         smallCache.notContainsKey("1234").assertFalse()
         
@@ -70,7 +70,7 @@ class SimpleLRUCacheTest {
     
     @Test
     fun get() {
-        val cache = SimpleLRUCache<String, String>(2)
+        val cache = LRUCache<String, String>(2)
         //empty case
         cache[""].assertNull()
         cache["test"].assertNull()
@@ -78,31 +78,31 @@ class SimpleLRUCacheTest {
         cache["abc"] = "abc"
         cache[""].assertNull()
         cache["test"].assertNull()
-        cache["abc"].assertNotNullAndEquals("abc")
+        cache["abc"].assert("abc")
         // multiple case
         cache["123"] = "4"
         cache[""].assertNull()
         cache["test"].assertNull()
-        cache["abc"].assertNotNullAndEquals("abc")
-        cache["123"].assertNotNullAndEquals("4")
+        cache["abc"].assert("abc")
+        cache["123"].assert("4")
     }
     
     @Test
     fun getOrRemove() {
-        val cache = SimpleLRUCache<String, String>(2)
+        val cache = LRUCache<String, String>(2)
         cache["a"].assertNull()
         cache.getOrRemove("a") { _: String, value: String -> value == "1" }.assertNull() //there is none
         cache["a"] = "1"
         cache.getOrRemove("a") { key: String, _: String -> key == "1" }.assertNull("condition not ok, so should remove entry")
         cache["a"].assertNull()
         cache["a"] = "2"
-        cache.getOrRemove("a") { _: String, value: String -> value == "2" }.assertNotNullAndEquals("2")
-        cache["a"].assertNotNullAndEquals("2")
+        cache.getOrRemove("a") { _: String, value: String -> value == "2" }.assert("2")
+        cache["a"].assert("2")
     }
     
     @Test
     fun remove() {
-        val cache = SimpleLRUCache<String, String>(2)
+        val cache = LRUCache<String, String>(2)
         cache["abc"] = "123"
         cache["abc"].assertNotNull()
         cache.remove("abc").assertNotNull()
@@ -122,7 +122,7 @@ class SimpleLRUCacheTest {
     @Test
     fun setCacheSize() {
         //test broken values
-        val cache = SimpleLRUCache<String, String>(1)
+        val cache = LRUCache<String, String>(1)
         cache.setCacheSize(0)
         cache.set("1234", "1234").assertNull()
         cache.set("2222", "2222").assertNotNull("Should not allow cache size of 0, thus there should always be at least 1 size")
@@ -148,29 +148,29 @@ class SimpleLRUCacheTest {
     
     @Test
     fun getOrPut() {
-        val cache = SimpleLRUCache<String, String>(2)
+        val cache = LRUCache<String, String>(2)
         cache["a"].assertNull()
         cache.getOrPut("a") { "1" }
-        cache["a"].assertNotNullAndEquals("1")
+        cache["a"].assert("1")
         cache.getOrPut("a") { "2" }
-        cache["a"].assertNotNullAndEquals("1", "should not update value if there.")
+        cache["a"].assert("1", "should not update value if there.")
     }
     
     @Test
     fun set() {
-        val smallCache = SimpleLRUCache<String, String>(1)
+        val smallCache = LRUCache<String, String>(1)
         smallCache.set("1234", "1234").assertNull("should not evict any key")
-        smallCache.set("abc", "abc").assertNotNullAndEquals("1234", "should evict the first key")
+        smallCache.set("abc", "abc").assert("1234", "should evict the first key")
         
-        val largeCache = SimpleLRUCache<String, String>(5)
+        val largeCache = LRUCache<String, String>(5)
         for (i in 0 until 5) {
             largeCache[i.toString()] = i.toString()
         }
         //now lets see that we also get the order and the count still matches.
-        largeCache.set("a1", "a1").assertNotNullAndEquals("0")
-        largeCache.set("a2", "a2").assertNotNullAndEquals("1")
-        largeCache.set("a3", "a3").assertNotNullAndEquals("2")
-        largeCache.set("a4", "a4").assertNotNullAndEquals("3")
+        largeCache.set("a1", "a1").assert("0")
+        largeCache.set("a2", "a2").assert("1")
+        largeCache.set("a3", "a3").assert("2")
+        largeCache.set("a4", "a4").assert("3")
         largeCache.containsKey("4").assertTrue()
         largeCache["a5"] = "a5"
         largeCache.containsKey("4").assertFalse()
@@ -178,18 +178,18 @@ class SimpleLRUCacheTest {
     
     @Test
     fun badSizeForInit() {
-        val broken = SimpleLRUCache<String, String>(0)
+        val broken = LRUCache<String, String>(0)
         broken.set("1234", "1234").assertNull()
         broken.set("2222", "2222").assertNotNull("Should not allow cache size of 0, thus there should always be at least 1 size")
         
-        val negative = SimpleLRUCache<String, String>(-100)
+        val negative = LRUCache<String, String>(-100)
         negative.set("1234", "1234").assertNull()
         negative.set("2222", "2222").assertNotNull("Should not allow cache size of -100, thus there should always be at least 1 size")
     }
     
     @Test
     fun clear() {
-        val cache = SimpleLRUCache<String, String>(2)
+        val cache = LRUCache<String, String>(2)
         //make sure nothing weird happens
         cache.clear()
         //then try set some data and clear that.
@@ -203,7 +203,7 @@ class SimpleLRUCacheTest {
     
     @Test
     fun removeOldest() {
-        val cache = SimpleLRUCache<String, String>(2)
+        val cache = LRUCache<String, String>(2)
         cache["1"] = "1"
         cache["2"] = "2"
         

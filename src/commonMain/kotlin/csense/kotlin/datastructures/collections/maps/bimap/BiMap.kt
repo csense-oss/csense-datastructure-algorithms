@@ -1,6 +1,6 @@
 @file:Suppress("NOTHING_TO_INLINE", "unused")
 
-package csense.kotlin.datastructures.collections
+package csense.kotlin.datastructures.collections.maps.bimap
 
 import csense.kotlin.extensions.*
 import csense.kotlin.extensions.collections.map.*
@@ -58,9 +58,16 @@ public interface MutableBiMap<Key, Value> : BiMap<Key, Value> {
 }
 
 internal class BiMapImmutableImpl<Key, Value> : DualMapBiMap<Key, Value> {
+
+    override val keyMap: Map<Key, Value>
+
+    override val valueMap: Map<Value, Key>
+    
+    
+    
     constructor(fromMap: Map<Key, Value>) {
         keyMap = fromMap.toMap()
-        valueMap = fromMap.reverseKeyValue()
+        this.valueMap = fromMap.reverseKeyValue()
     }
 
     constructor(fromPairs: List<Pair<Key, Value>>) {
@@ -73,9 +80,6 @@ internal class BiMapImmutableImpl<Key, Value> : DualMapBiMap<Key, Value> {
         valueMap = keyMap.reverseKeyValue()
     }
 
-    override val keyMap: Map<Key, Value>
-
-    override val valueMap: Map<Value, Key>
 
 }
 

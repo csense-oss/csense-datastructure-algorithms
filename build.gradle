@@ -1,20 +1,20 @@
 buildscript {
 
     //https://github.com/Kotlin/kotlinx.coroutines
-    ext.coroutinesVersion = "1.6.4"
+    ext.coroutinesVersion = "1.7.3"
     //https://github.com/csense-oss/csense-kotlin-test
-    ext.csenseTestsVersion = "0.0.58"
+    ext.csenseTestsVersion = "0.0.60"
     //https://github.com/csense-oss/csense-kotlin-annotations
-    ext.csenseAnnotationVersion = "0.0.50"
+    ext.csenseAnnotationVersion = "0.0.63"
 
     //https://github.com/JetBrains/kotlin/releases
-    ext.kotlin_version = "1.7.20"
+    ext.kotlin_version = "1.9.0"
 
     //https://github.com/Kotlin/kotlinx-benchmark
-    ext.kotlinx_benchmark_version = "0.4.5"
+    ext.kotlinx_benchmark_version = "0.4.9"
 
     // https://github.com/csense-oss/csense-kotlin
-    ext.useCsenseVersion = "0.0.59"
+    ext.useCsenseVersion = "0.0.60"
 
 
     //library settings
@@ -46,7 +46,7 @@ plugins {
     //https://github.com/Kotlin/kotlinx-benchmark
     id 'org.jetbrains.kotlinx.benchmark' version "$kotlinx_benchmark_version"
     //https://github.com/jeremylong/DependencyCheck https://plugins.gradle.org/plugin/org.owasp.dependencycheck
-    id "org.owasp.dependencycheck" version "7.2.1"
+    id "org.owasp.dependencycheck" version "8.3.1"
 }
 
 
@@ -63,7 +63,7 @@ repositories {
 kotlin {
     explicitApi = 'strict'
     jvm()
-    js(LEGACY) {
+    js(IR) {
         browser {
         }
         nodejs {
@@ -86,17 +86,7 @@ kotlin {
                 implementation "org.jetbrains.kotlinx:kotlinx-benchmark-runtime:$kotlinx_benchmark_version"
             }
         }
-        jvmMain {
-        }
-        jvmTest {
-        }
 
-        jsMain {
-
-        }
-        jsTest {
-
-        }
         all {
             languageSettings {
                 enableLanguageFeature("InlineClasses")
@@ -123,10 +113,10 @@ jvmTest {
         showStackTraces true
     }
     useJUnitPlatform()
-    reports {
-        junitXml.enabled = true
-        html.enabled = true
-    }
+//    reports {
+//        junitXml.enabled = true
+//        html.enabled = true
+//    }
 }
 
 

@@ -1,5 +1,8 @@
-package csense.kotlin.datastructures.collections
+@file:Suppress("unused", "INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 
+package csense.kotlin.datastructures.collections.lru
+
+import kotlin.internal.*
 import csense.kotlin.*
 import csense.kotlin.annotations.numbers.*
 import csense.kotlin.extensions.*
@@ -16,7 +19,7 @@ import kotlin.also
  * @property map [HashMap]<Key, Value>
  * @constructor
  */
-public class SimpleLRUCache<Key, Value>(
+public class LRUCache<Key, Value>(
     @IntLimit(from = 1)
     private var cacheSize: Int
 ) {
@@ -95,7 +98,7 @@ public class SimpleLRUCache<Key, Value>(
         return value
     }
 
-    private fun moveToBack(key: Key, value: Value){
+    private fun moveToBack(key: Key, value: Value) {
         map.moveToBack(key)
         map.remove(key)
         map[key] = value
@@ -133,9 +136,10 @@ public class SimpleLRUCache<Key, Value>(
      * @param key Key
      * @TimeComplexity O(n) where n = size of data
      */
-    public fun remove(key: Key) {
-        map.remove(key)
+    public fun remove(key: Key): Value? {
+        return map.remove(key)
     }
+
 
     /**
      * Allows you to change the size of this LRU cache
@@ -205,6 +209,28 @@ public class SimpleLRUCache<Key, Value>(
     }
 }
 
-public inline fun Map<Key, Value>.moveToBack(){
-
+public inline fun <Key, Value> MutableMap<Key, Value>.moveToBack(key: Key) {
+    val removed: Value = remove(key) ?: return
+    put(key, removed)
 }
+
+public inline fun <Key, Value> LRUCache<Key, Value>.getOrPut(key: Key, value: Value): Value {
+    return getOrPut(key = key, getValue = { value })
+}
+
+@LowPriorityInOverloadResolution
+public inline fun <Key, Value> LRUCache<Key, Value>.getOrPut(
+    key: Key,
+    getValue: () -> Value
+): Value {
+    val contains: Value? = get(key)
+    if (contains != null) {
+        return contains
+    }
+    val value: Value = getValue()
+    put(key, value)
+    return value
+}
+
+
+
